@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GroundMover : MonoBehaviour
+public class GroundMove : MonoBehaviour
 {
     [Header("Ayarlar")]
     public float speed = 5f;
