@@ -3,9 +3,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Ayarlar")]
-    public float jumpForce = 10f; 
-    public LayerMask groundLayer; 
-    public Transform groundCheck; 
+    public float jumpForce = 10f;
+    public LayerMask groundLayer;
+    public Transform groundCheck;
     public float checkRadius = 0.2f;
 
     private Rigidbody2D rb;
@@ -29,5 +29,14 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         rb.linearVelocity = Vector2.up * jumpForce;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            Debug.Log("Oyun Bitti!");
+            Time.timeScale = 0;
+        }
     }
 }
