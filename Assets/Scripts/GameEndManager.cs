@@ -9,6 +9,7 @@ public class GameEndManager : MonoBehaviour
     public TextMeshProUGUI endHighScoreText;
     void Start()
     {
+        Application.targetFrameRate = 60;
         gameOverPanel.SetActive(false);
         Time.timeScale = 1f;
     }

@@ -17,13 +17,18 @@ public class PlayerController : MonoBehaviour
         scoreManager = FindFirstObjectByType<ScoreManager>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
-        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
+        if (isGrounded && (Input.GetKeyDown(KeyCode.Mouse0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
         {
             Jump();
+        }
+
+        if (transform.position.y < -7f || transform.position.x < -10f)
+        {
+            FinishGame();
         }
     }
 
@@ -36,7 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            
+
             FindFirstObjectByType<GameEndManager>().GameOver();
         }
     }
@@ -48,6 +53,15 @@ public class PlayerController : MonoBehaviour
             FindFirstObjectByType<ScoreManager>().StopScore();
 
             FindFirstObjectByType<GameEndManager>().GameOver();
+        }
+    }
+
+    void FinishGame()
+    {
+        GameEndManager lm = FindFirstObjectByType<GameEndManager>();
+        if (lm != null)
+        {
+            lm.GameOver();
         }
     }
 }

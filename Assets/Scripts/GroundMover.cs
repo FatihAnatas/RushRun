@@ -16,7 +16,7 @@ public class GroundMover : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         transform.Translate(Vector2.left * speed * Time.deltaTime);
 

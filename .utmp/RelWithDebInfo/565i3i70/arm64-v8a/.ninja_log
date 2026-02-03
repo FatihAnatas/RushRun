@@ -1,0 +1,12 @@
+# ninja log v5
+73	521	7918583811836422	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	7e5e08f0f655452
+523	959	7918583816217490	C:/UnityProjects/RushRunGame/RushRun/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/565i3i70/obj/arm64-v8a/libswappywrapper.so	2d2cee83c5a1d45a
+21	1822	7918583824603770	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	1113164d294767ba
+7	1880	7918583825021728	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	6bd022fe906ddd86
+51	1913	7918583825427077	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	5f5fafff29facbad
+29	1953	7918583826167885	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	5e3918167daae764
+14	1967	7918583826278785	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	d5758bd4a45e4d6b
+39	2249	7918583829147989	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	84065f82655623df
+0	2398	7918583830655981	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	cf2061e96a2a13a4
+64	2416	7918583830832634	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	a0e719203e2f0802
+2417	2504	7918583831778428	C:/UnityProjects/RushRunGame/RushRun/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/565i3i70/obj/arm64-v8a/libgame.so	82f99302803bfd70

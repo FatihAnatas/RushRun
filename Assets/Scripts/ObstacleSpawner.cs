@@ -15,7 +15,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Start() => SetRandomTime();
 
-    void Update()
+    void FixedUpdate()
     {
         timer += Time.deltaTime;
         if (timer >= timeBetweenSpawns)
