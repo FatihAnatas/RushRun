@@ -3,7 +3,7 @@ using UnityEngine;
 public class GroundMover : MonoBehaviour
 {
     [Header("Ayarlar")]
-    public float speed = 5f;
+    public float speed = 10f;
 
     private float groundWidth;
 
@@ -16,7 +16,7 @@ public class GroundMover : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         transform.Translate(Vector2.left * speed * Time.deltaTime);
 
