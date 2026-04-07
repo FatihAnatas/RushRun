@@ -40,11 +40,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
+  - name: Sky
     uniqueID: 244296747
     locked: 0
-  - name: Background Agac
+  - name: Mountain
+    uniqueID: 1295490283
+    locked: 0
+  - name: Agac
     uniqueID: 2698183841
+    locked: 0
+  - name: Zemin
+    uniqueID: 1309147899
     locked: 0
   - name: Default
     uniqueID: 0

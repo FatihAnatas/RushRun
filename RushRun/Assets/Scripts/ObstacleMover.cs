@@ -7,6 +7,7 @@ public class ObstacleMover : MonoBehaviour
 
     void Update()
     {
+        if (PlayerController.isGameOver) return;
         // Engeli her karede SOLA doðru kaydýrýr
         transform.Translate(Vector2.left * speed * Time.deltaTime);
     }

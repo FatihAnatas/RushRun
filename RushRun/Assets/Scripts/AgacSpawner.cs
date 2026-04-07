@@ -20,6 +20,7 @@ public class EnvironmentSpawner : MonoBehaviour
 
     void Update()
     {
+        if (PlayerController.isGameOver) return;
         timer += Time.deltaTime;
         if (timer >= nextSpawnTime)
         {

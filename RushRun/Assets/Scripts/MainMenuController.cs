@@ -17,6 +17,6 @@ public class MainMenuController : MonoBehaviour
 
     public void LevelModeScene()
     {
-        SceneManager.LoadScene("LevelGameScene");
+        SceneManager.LoadScene("Level1Scene");
     }
 }

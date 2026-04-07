@@ -24,6 +24,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Update()
     {
+        if (PlayerController.isGameOver) return;
         timer += Time.deltaTime;
         if (timer >= timeBetweenSpawns)
         {

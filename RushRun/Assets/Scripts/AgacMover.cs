@@ -7,6 +7,7 @@ public class AgacMover : MonoBehaviour
 
     void Update()
     {
+        if (PlayerController.isGameOver) return;
         transform.Translate(Vector2.left * speed * Time.deltaTime);
     }
 }
