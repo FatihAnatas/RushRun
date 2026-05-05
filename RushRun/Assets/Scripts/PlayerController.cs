@@ -6,8 +6,8 @@ public class PlayerController : MonoBehaviour
     public static bool isGameOver = false; 
 
     [Header("Oyun Modu Ayarý")]
-    public bool isLevelMode = false; // Bunu iþaretlersen karakter saða koþar
-    public float runSpeed = 8f;      // Level modunda ne kadar hýzlý koþacak?
+    public bool isLevelMode = false; 
+    public float runSpeed = 8f;
 
     [Header("Fizik Ayarlarý")]
     public float jumpForce = 12f;
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         isGameOver = false; 
 
         rb = GetComponent<Rigidbody2D>();
@@ -66,15 +67,33 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
-        if (Input.GetMouseButtonDown(0) && isGrounded && !isSliding)
+        // 1. MOBÝL ÝÇÝN GERÇEK DOKUNMATÝK KONTROLÜ
+        if (Input.touchCount > 0)
         {
-            startTouchPosition = Input.mousePosition;
-        }
+            Touch touch = Input.GetTouch(0);
 
-        if (Input.GetMouseButtonUp(0))
+            if (touch.phase == TouchPhase.Began && isGrounded && !isSliding)
+            {
+                startTouchPosition = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                endTouchPosition = touch.position;
+                DetectSwipe();
+            }
+        }
+        // 2. BÝLGÝSAYAR TESTLERÝ ÝÇÝN FARE KONTROLÜ
+        else
         {
-            endTouchPosition = Input.mousePosition;
-            DetectSwipe();
+            if (Input.GetMouseButtonDown(0) && isGrounded && !isSliding)
+            {
+                startTouchPosition = Input.mousePosition;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                endTouchPosition = Input.mousePosition;
+                DetectSwipe();
+            }
         }
     }
 
@@ -82,11 +101,13 @@ public class PlayerController : MonoBehaviour
     {
         float verticalDistance = endTouchPosition.y - startTouchPosition.y;
 
+        // Eðer parmaðý aþaðý doðru belli bir mesafe kaydýrdýysa (Kayma)
         if (verticalDistance < -swipeThreshold && isGrounded && !isSliding)
         {
             StartSlide();
         }
-        else if (Mathf.Abs(verticalDistance) < swipeThreshold && isGrounded)
+        // Aþaðý kaydýrmadýysa, parmaðýný çektiði an zýpla (Sýnýrý biraz gevþettik)
+        else if (isGrounded && !isSliding)
         {
             jumpRequested = true;
         }
@@ -110,10 +131,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // KÝLÝT: Eðer bölüm bittiyse fiziksel hýzý 0 yap ve çýk
+        // KÝLÝT: Eðer bölüm bittiyse sadece yatay hýzý (X) sýfýrla. 
+        // Y hýzýný (yerçekimini) sýfýrlamýyoruz ki karakter havada donmasýn, yere düþüp yatsýn!
         if (isLevelFinished)
         {
-            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
             return;
         }
 
@@ -121,12 +143,10 @@ public class PlayerController : MonoBehaviour
 
         if (isLevelMode)
         {
-            // Level Modu: Karakter fiziksel olarak saða gider
             rb.linearVelocity = new Vector2(runSpeed, rb.linearVelocity.y);
         }
         else
         {
-            // Sonsuz Mod: Karakterin X hýzý 0'dýr
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         }
 
@@ -154,12 +174,22 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Diken/Tuzak çarparsa öl
+        // 1. DURUM: Diken veya Varil (Kutu KAPANMAZ, karakter zemine çarpýp üstünde yatar)
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             HandleGameOver();
         }
-        // "Finish" etiketli portala çarparsa kazan
+        // 2. DURUM: Zehirli Su (Ýllüzyon Taktiði çalýþýr, kutu KAPANIR ve lüp diye suya batar)
+        else if (collision.gameObject.CompareTag("Water"))
+        {
+            Collider2D myCollider = GetComponent<Collider2D>();
+            if (myCollider != null)
+            {
+                myCollider.enabled = false;
+            }
+            HandleGameOver();
+        }
+        // 3. DURUM: Bitiþ çizgisi
         else if (collision.gameObject.CompareTag("Finish"))
         {
             LevelCompleted();
@@ -168,15 +198,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle")) HandleGameOver();
+        // Katý tuzaklara (Kutu vb.) çarptýðýnda Collider'ý KAPATMIYORUZ 
+        // ki karakter kutunun üstünde/yanýnda dursun, yerin dibine düþmesin.
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            HandleGameOver();
+        }
     }
 
     void HandleGameOver()
     {
-
         isGameOver = true;
         isLevelFinished = true; // Karakteri kilitler
-        rb.linearVelocity = Vector2.zero; // Hýzý sýfýrlar
+        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y); // Y hýzýný ellemiyoruz
         isSliding = false; // Kaymayý iptal eder
 
         if (anim != null)
@@ -190,17 +224,13 @@ public class PlayerController : MonoBehaviour
             scoreManager.StopScore(); // Skoru anýnda durdur
         }
 
-        // 2. MODLARA GÖRE AYRIM: 1.5 saniye sonra ne olacak?
         if (isLevelMode)
         {
-            // Level modundaysa 1.5 saniye sonra bölümü baþtan baþlat
             Invoke("RestartLevel", 1.0f);
         }
         else
         {
-            // Sonsuz moddaysa 1.5 saniye sonra Game Over ekranýný getir
             Invoke("ShowGameOverScreen", 1.0f);
-            
         }
     }
 

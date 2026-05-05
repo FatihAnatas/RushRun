@@ -685,7 +685,7 @@ Transform:
   m_GameObject: {fileID: 919914107}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.53, y: -1.49, z: -4.428989}
+  m_LocalPosition: {x: 19.83, y: -1.04, z: -4.428989}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -704,20 +704,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacles:
-  - prefab: {fileID: 2289661682236473985, guid: 5af79c41b1199a34d87e4ffe6865b749, type: 3}
+  - prefab: {fileID: 9125250699356425789, guid: 39c07ace779b8c144af4cc68253145d0, type: 3}
     yOffset: 0
-  - prefab: {fileID: 2060448293272568326, guid: 41eadb7e17a18b840aeae160d10886a0, type: 3}
-    yOffset: 0
-  - prefab: {fileID: 807505164080672162, guid: 1ffea85a5c8820f4db4ec00516032493, type: 3}
-    yOffset: 0
-  - prefab: {fileID: 1533106393416472488, guid: 2525b138a4d58e540833d8683f3a1169, type: 3}
-    yOffset: 0
-  - prefab: {fileID: 3084095716957196582, guid: 41f6e453f211eae44bfd4d7b417facc7, type: 3}
-    yOffset: 0
-  - prefab: {fileID: 6164339280606267446, guid: 95aecfbcd6b600f4d818724464b344fc, type: 3}
-    yOffset: 1.1
-  minTime: 1
-  maxTime: 3
+    extraWaitTime: 0
+  minTime: 3
+  maxTime: 5
   destroyTime: 7
   spawnPoint: {fileID: 919914109}
   groundLayer:
@@ -1586,7 +1577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc822bec1cc142beb551904c9749d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundMover
-  speed: 10
+  speed: 8
 --- !u!61 &1369581968
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2165,7 +2156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bc822bec1cc142beb551904c9749d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundMover
-  speed: 10
+  speed: 8
 --- !u!61 &1731250228
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2854,8 +2845,16 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7733874818811295408, guid: 856e0f483e055784697423e340fd9d02, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733874818811295408, guid: 856e0f483e055784697423e340fd9d02, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733874818811295408, guid: 856e0f483e055784697423e340fd9d02, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.4
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 7733874818811295408, guid: 856e0f483e055784697423e340fd9d02, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2892,6 +2891,14 @@ PrefabInstance:
     - target: {fileID: 7733874818811295408, guid: 856e0f483e055784697423e340fd9d02, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8053595019103725268, guid: 856e0f483e055784697423e340fd9d02, type: 3}
+      propertyPath: runSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8053595019103725268, guid: 856e0f483e055784697423e340fd9d02, type: 3}
+      propertyPath: jumpForce
+      value: 12.35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
