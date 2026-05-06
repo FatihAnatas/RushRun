@@ -67,49 +67,42 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
-        // 1. MOBÝL ÝÇÝN GERÇEK DOKUNMATÝK KONTROLÜ
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Began && isGrounded && !isSliding)
+            // Parmaðýn ekrana deðdiði ÝLK an (Sýfýr Gecikme)
+            if (touch.phase == TouchPhase.Began)
             {
-                startTouchPosition = touch.position;
-            }
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                endTouchPosition = touch.position;
-                DetectSwipe();
-            }
-        }
-        // 2. BÝLGÝSAYAR TESTLERÝ ÝÇÝN FARE KONTROLÜ
-        else
-        {
-            if (Input.GetMouseButtonDown(0) && isGrounded && !isSliding)
-            {
-                startTouchPosition = Input.mousePosition;
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                endTouchPosition = Input.mousePosition;
-                DetectSwipe();
-            }
-        }
-    }
+                // Eðer dokunulan yer ekranýn SAÐ yarýsýysa -> ZIPLA
+                if (touch.position.x > Screen.width / 2f)
+                {
+                    if (isGrounded && !isSliding) jumpRequested = true;
+                }
+                // Eðer dokunulan yer ekranýn SOL yarýsýysa -> KAY
+                else
+                {
+                    if (isGrounded && !isSliding) StartSlide();
 
-    void DetectSwipe()
-    {
-        float verticalDistance = endTouchPosition.y - startTouchPosition.y;
-
-        // Eðer parmaðý aþaðý doðru belli bir mesafe kaydýrdýysa (Kayma)
-        if (verticalDistance < -swipeThreshold && isGrounded && !isSliding)
-        {
-            StartSlide();
+                    // Havadaysa hýzlýca yere düþsün
+                    if (!isGrounded) rb.linearVelocity = new Vector2(rb.linearVelocity.x, -jumpForce);
+                }
+            }
         }
-        // Aþaðý kaydýrmadýysa, parmaðýný çektiði an zýpla (Sýnýrý biraz gevþettik)
-        else if (isGrounded && !isSliding)
+        else // Bilgisayar Testi (Farenin sol/sað týklamasý gibi deðil, ekranýn neresine týkladýðýna bakar)
         {
-            jumpRequested = true;
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Input.mousePosition.x > Screen.width / 2f)
+                {
+                    if (isGrounded && !isSliding) StartSlide();
+                    if (!isGrounded) rb.linearVelocity = new Vector2(rb.linearVelocity.x, -jumpForce);
+                }
+                else
+                {
+                    if (isGrounded && !isSliding) jumpRequested = true;
+                }
+            }
         }
     }
 
